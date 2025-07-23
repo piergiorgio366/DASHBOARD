@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<title>Dashboard Finanziaria Completa + Carrello</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 40px;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #222;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    h2 {
+      border-left: 5px solid #007bff;
+      padding-left: 10px;
+      margin-top: 60px;
+      font-size: 1.5em;
+      color: #007bff;
+    }
+    canvas {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .charts {
+      max-width: 1000px;
+      margin: auto;
+    }
+    .summary {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 10px;
+      background: #e9f5ff;
+      border-left: 5px solid #17a2b8;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script></head>
+<body>
+<header>
+<h1>Dashboard Finanziaria + Carrello Medio</h1>
+<p>Analisi estesa con confronti visivi e incrementi percentuali</p>
+</header>
+<h2>📌 Periodo Storico</h2>
+<section class="grid">
+<div class="card"><label>Incasso Mese Scorso (€)</label><input id="incasso_mese_scorso" type="number" value="57680.89"/></div>
+<div class="card"><label>Ordini Mese Scorso</label><input id="ordini_mese_scorso" type="number" value="2635"/></div>
+<div class="card"><label>Carrello Medio Mese Scorso (€)</label><input id="carrello_mese_scorso" type="number" value="21.89"/></div>
+</section>
+<h2>📆 Andamento Mensile (12 mesi)</h2><div class="charts"><canvas id="graficoAndamentoMensile"></canvas></div><section class="grid"><div class="card"><label>Mese 1</label><input id="nome_mese_1" type="text" value="Mese 1"/><label>Incasso (€)</label><input id="valore_mese_1" type="number" value="0"/></div><div class="card"><label>Mese 2</label><input id="nome_mese_2" type="text" value="Mese 2"/><label>Incasso (€)</label><input id="valore_mese_2" type="number" value="0"/></div><div class="card"><label>Mese 3</label><input id="nome_mese_3" type="text" value="Mese 3"/><label>Incasso (€)</label><input id="valore_mese_3" type="number" value="0"/></div><div class="card"><label>Mese 4</label><input id="nome_mese_4" type="text" value="Mese 4"/><label>Incasso (€)</label><input id="valore_mese_4" type="number" value="0"/></div><div class="card"><label>Mese 5</label><input id="nome_mese_5" type="text" value="Mese 5"/><label>Incasso (€)</label><input id="valore_mese_5" type="number" value="0"/></div><div class="card"><label>Mese 6</label><input id="nome_mese_6" type="text" value="Mese 6"/><label>Incasso (€)</label><input id="valore_mese_6" type="number" value="0"/></div><div class="card"><label>Mese 7</label><input id="nome_mese_7" type="text" value="Mese 7"/><label>Incasso (€)</label><input id="valore_mese_7" type="number" value="0"/></div><div class="card"><label>Mese 8</label><input id="nome_mese_8" type="text" value="Mese 8"/><label>Incasso (€)</label><input id="valore_mese_8" type="number" value="0"/></div><div class="card"><label>Mese 9</label><input id="nome_mese_9" type="text" value="Mese 9"/><label>Incasso (€)</label><input id="valore_mese_9" type="number" value="0"/></div><div class="card"><label>Mese 10</label><input id="nome_mese_10" type="text" value="Mese 10"/><label>Incasso (€)</label><input id="valore_mese_10" type="number" value="0"/></div><div class="card"><label>Mese 11</label><input id="nome_mese_11" type="text" value="Mese 11"/><label>Incasso (€)</label><input id="valore_mese_11" type="number" value="0"/></div><div class="card"><label>Mese 12</label><input id="nome_mese_12" type="text" value="Mese 12"/><label>Incasso (€)</label><input id="valore_mese_12" type="number" value="0"/></div></section><h2>📈 Periodo Attuale</h2>
+<section class="grid">
+<div class="card"><label>Incasso Mese Corrente (€)</label><input id="incasso_mese_corrente" type="number" value="59773.47"/></div>
+<div class="card"><label>Ordini Mese Corrente</label><input id="ordini_mese_corrente" type="number" value="2520"/></div>
+<div class="card"><label>Carrello Medio Mese Corrente (€)</label><input id="carrello_mese_corrente" type="number" value="23.72"/></div>
+</section>
+<h2>📊 Proiezioni</h2><h2>🎯 Eventi Previsti / Stagionalità</h2><section class="grid"><div class="card"><label>Eventi o stagionalità previsti</label><textarea id="eventi_stagionali">Esempio: incremento a dicembre per Natale</textarea></div></section>
+<section class="grid">
+<div class="card"><label>Proiezione Fine Mese (€)</label><input id="proiezione_fine_mese" type="number" value="85686.82"/><div id="fine_mese_perc" style="margin-top:5px; font-size:0.9em; color:#17a2b8; font-weight:bold;">+0%</div></div>
+<div class="card"><label>Proiezione Fine Anno (€)</label><input id="proiezione_fine_anno" type="number" value="505033.94"/><div id="fine_anno_perc" style="margin-top:5px; font-size:0.9em; color:#17a2b8; font-weight:bold;">+0%</div></div>
+<div class="card"><label>Proiezione Anno Prossimo (€)</label><input id="proiezione_anno_prossimo" type="number" value="19288756.71"/><div id="anno_prossimo_perc" style="margin-top:5px; font-size:0.9em; color:#17a2b8; font-weight:bold;">+0%</div></div>
+</section>
+<section class="grid"><div class="card"><label>Strategia (es. lancio nuovo canale Q4)</label><textarea id="strategia_pianificazione">Esempio: previsto incremento 20% Q4 con lancio TikTok Ads</textarea></div></section><h2>🧠 Pianificazione Strategica</h2><h2>📉 Analisi Automatica</h2>
+<div class="summary" id="analisi"></div>
+<h2>🛍️ Confronto Carrello Medio</h2>
+<div class="charts">
+<canvas id="carrelloChart"></canvas>
+</div>
+<h2>📊 Andamento Incassi</h2>
+<div class="charts">
+<canvas id="chartIncassi"></canvas>
+</div>
+<script>
+    const inputs = {
+      incasso_mese_scorso: document.getElementById('incasso_mese_scorso'),
+      ordini_mese_scorso: document.getElementById('ordini_mese_scorso'),
+      carrello_mese_scorso: document.getElementById('carrello_mese_scorso'),
+
+      incasso_mese_corrente: document.getElementById('incasso_mese_corrente'),
+      ordini_mese_corrente: document.getElementById('ordini_mese_corrente'),
+      carrello_mese_corrente: document.getElementById('carrello_mese_corrente'),
+
+      proiezione_fine_mese: document.getElementById('proiezione_fine_mese'),
+      proiezione_fine_anno: document.getElementById('proiezione_fine_anno'),
+      proiezione_anno_prossimo: document.getElementById('proiezione_anno_prossimo'),
+    };
+
+    const ctxIncasso = document.getElementById('chartIncassi').getContext('2d');
+    const chartIncasso = new Chart(ctxIncasso, {
+      type: 'line',
+      data: {
+        labels: ['Mese Scorso', 'Mese Corrente', 'Fine Mese', 'Fine Anno', 'Anno Prossimo'],
+        datasets: [{
+          label: 'Incasso (€)',
+          data: [],
+          borderColor: '#007bff',
+          backgroundColor: 'rgba(0,123,255,0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    const ctxCarrello = document.getElementById('carrelloChart').getContext('2d');
+    const chartCarrello = new Chart(ctxCarrello, {
+      type: 'bar',
+      data: {
+        labels: ['Mese Scorso', 'Mese Corrente'],
+        datasets: [{
+          label: 'Carrello Medio (€)',
+          data: [],
+          backgroundColor: ['#ffc107', '#28a745']
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    function aggiorna() {
+      const incassoPre = parseFloat(inputs.incasso_mese_scorso.value) || 0;
+      const incassoNow = parseFloat(inputs.incasso_mese_corrente.value) || 0;
+      const ordiniPre = parseFloat(inputs.ordini_mese_scorso.value) || 0;
+      const ordiniNow = parseFloat(inputs.ordini_mese_corrente.value) || 0;
+      const carrelloPre = parseFloat(inputs.carrello_mese_scorso.value) || 0;
+      const carrelloNow = parseFloat(inputs.carrello_mese_corrente.value) || 0;
+
+      const incassoPerc = incassoPre ? ((incassoNow - incassoPre) / incassoPre) * 100 : 0;
+      const ordiniPerc = ordiniPre ? ((ordiniNow - ordiniPre) / ordiniPre) * 100 : 0;
+      const carrelloPerc = carrelloPre ? ((carrelloNow - carrelloPre) / carrelloPre) * 100 : 0;
+
+      document.getElementById('analisi').innerHTML = `
+        📈 <strong>Variazione Incasso:</strong> ${incassoPerc.toFixed(2)}%<br>
+        📦 <strong>Variazione Ordini:</strong> ${ordiniPerc.toFixed(2)}%<br>
+        🛒 <strong>Variazione Carrello Medio:</strong> ${carrelloPerc.toFixed(2)}%
+      `;
+
+      chartIncasso.data.datasets[0].data = [
+        incassoPre,
+        incassoNow,
+        parseFloat(inputs.proiezione_fine_mese.value),
+        parseFloat(inputs.proiezione_fine_anno.value),
+        parseFloat(inputs.proiezione_anno_prossimo.value)
+      ];
+      chartCarrello.data.datasets[0].data = [carrelloPre, carrelloNow];
+
+      chartIncasso.update();
+      chartCarrello.update();
+    }
+
+    Object.values(inputs).forEach(input => input.addEventListener('input', aggiorna));
+    aggiorna();
+  </script>
+<script>
+const ctxMensile = document.getElementById('graficoAndamentoMensile').getContext('2d');
+const chartMensile = new Chart(ctxMensile, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Incasso Mensile (€)',
+      data: [],
+      borderColor: '#17a2b8',
+      backgroundColor: 'rgba(23, 162, 184, 0.2)',
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { y: { beginAtZero: true } }
+  }
+});
+
+function aggiornaMensile() {
+  const mesi = [];
+  const valori = [];
+  for (let i = 1; i <= 12; i++) {
+    const mese = document.getElementById('nome_mese_' + i).value || 'Mese ' + i;
+    const valore = parseFloat(document.getElementById('valore_mese_' + i).value) || 0;
+    mesi.push(mese);
+    valori.push(valore);
+  }
+  chartMensile.data.labels = mesi;
+  chartMensile.data.datasets[0].data = valori;
+  chartMensile.update();
+}
+for (let i = 1; i <= 12; i++) {
+  document.getElementById('nome_mese_' + i).addEventListener('input', aggiornaMensile);
+  document.getElementById('valore_mese_' + i).addEventListener('input', aggiornaMensile);
+}
+aggiornaMensile();
+</script><script>
+function aggiornaIncrementi() {
+  const mappa = {
+    incasso: ['incasso_mese_scorso', 'incasso_mese_corrente'],
+    ordini: ['ordini_mese_scorso', 'ordini_mese_corrente'],
+    carrello: ['carrello_mese_scorso', 'carrello_mese_corrente']
+  };
+  for (const key in mappa) {
+    const [oldId, newId] = mappa[key];
+    const oldVal = parseFloat(document.getElementById(oldId).value) || 0;
+    const newVal = parseFloat(document.getElementById(newId).value) || 0;
+    const perc = oldVal ? ((newVal - oldVal) / oldVal) * 100 : 0;
+    const label = (perc >= 0 ? '+' : '') + perc.toFixed(2) + '%';
+    document.getElementById(key + '_incremento').textContent = label;
+  }
+}
+Object.values(inputs).forEach(input => input.addEventListener('input', () => {
+  aggiorna();
+  aggiornaMensile();
+  aggiornaIncrementi();
+}));
+aggiornaIncrementi();
+</script><script>
+function aggiornaProiezioniPerc() {
+  const proiezioni = {
+    fine_mese: ['incasso_mese_corrente', 'proiezione_fine_mese'],
+    fine_anno: ['incasso_mese_corrente', 'proiezione_fine_anno'],
+    anno_prossimo: ['proiezione_fine_anno', 'proiezione_anno_prossimo']
+  };
+  for (const key in proiezioni) {
+    const [baseId, targetId] = proiezioni[key];
+    const base = parseFloat(document.getElementById(baseId).value) || 0;
+    const target = parseFloat(document.getElementById(targetId).value) || 0;
+    const perc = base ? ((target - base) / base) * 100 : 0;
+    const label = (perc >= 0 ? '+' : '') + perc.toFixed(2) + '%';
+    document.getElementById(key + '_perc').textContent = label;
+  }
+}
+Object.values(inputs).forEach(input => input.addEventListener('input', () => {
+  aggiorna();
+  aggiornaMensile();
+  aggiornaIncrementi();
+  aggiornaProiezioniPerc();
+}));
+aggiornaProiezioniPerc();
+</script></body>
+</html>
