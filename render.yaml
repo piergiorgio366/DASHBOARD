@@ -14,31 +14,7 @@ services:
         value: "4173"
       - key: GEV_KEY_SETUP_TRUSTED_PEERS
         value: none
-      - key: GEV_ALLOWED_HOSTS
-        value: gods-eye-view-access-2026-nvgx.onrender.com
     disk:
       name: gods-eye-view-cache
       mountPath: /app/.gev-cache
       sizeGB: 1
-
-  - type: web
-    name: gods-eye-view-access-2026
-    runtime: docker
-    repo: https://github.com/piergiorgio366/DASHBOARD.git
-    branch: gods-eye-view-render
-    rootDir: deploy/gods-eye-view-render/auth
-    region: frankfurt
-    plan: starter
-    healthCheckPath: /healthz
-    envVars:
-      - key: PORT
-        value: "10000"
-      - key: BASIC_AUTH_USERNAME
-        value: piergiorgio
-      - key: BASIC_AUTH_PASSWORD
-        generateValue: true
-      - key: GODS_EYE_UPSTREAM
-        fromService:
-          type: pserv
-          name: gods-eye-view-app-2026
-          property: hostport
