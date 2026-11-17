@@ -7,11 +7,12 @@ set -eu
 
 upstream_host="${GODS_EYE_UPSTREAM%%:*}"
 printf '[gateway] Upstream configured: %s\n' "$GODS_EYE_UPSTREAM"
-if getent hosts "$upstream_host"; then
-  printf '[gateway] Upstream DNS resolves.\n'
-else
-  printf '[gateway] Upstream DNS lookup failed for %s.\n' "$upstream_host"
-fi
+printf '[gateway] Resolver config follows:\n'
+cat /etc/resolv.conf
+printf '[gateway] Internal hostname lookup follows:\n'
+nslookup "$upstream_host" 2>&1 || true
+printf '[gateway] Discovery hostname lookup follows:\n'
+nslookup "${upstream_host}-discovery" 2>&1 || true
 
 mkdir -p /etc/nginx/auth
 umask 077
