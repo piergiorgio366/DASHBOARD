@@ -5,7 +5,7 @@ services:
     repo: https://github.com/bilawalsidhu/gods-eye-view.git
     branch: main
     region: frankfurt
-    plan: starter
+    plan: standard
     dockerfilePath: ./Dockerfile
     envVars:
       - key: HOST
