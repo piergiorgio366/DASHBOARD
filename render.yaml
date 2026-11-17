@@ -15,7 +15,7 @@ services:
       - key: GEV_KEY_SETUP_TRUSTED_PEERS
         value: none
       - key: GEV_ALLOWED_HOSTS
-        value: gods-eye-view-access-2026.onrender.com
+        value: gods-eye-view-access-2026-nvgx.onrender.com
     disk:
       name: gods-eye-view-cache
       mountPath: /app/.gev-cache
